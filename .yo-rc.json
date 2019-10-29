@@ -1,0 +1,14 @@
+{
+  "generator-signalk-plugin": {
+    "promptValues": {
+      "id": "signalk-hour-meter",
+      "name": "Hour meter",
+      "className": "HourMeter",
+      "description": "Synthesizes hour meter data when other SignalK values indicate a device is on",
+      "hasWebApp": true,
+      "paths": [
+        "engine0Revs"
+      ]
+    }
+  }
+}
