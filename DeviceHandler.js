@@ -92,7 +92,8 @@ class DeviceHandler {
 
 
     updateLog(deviceOn) {
-        if (deviceOn || this.deviceOn != deviceOn) {
+        let statusChanged = this.deviceOn != deviceOn;
+        if (deviceOn || statusChanged) {
             // An update to the run log is needed
             this.openFile();
             this.log.getLast();
@@ -114,10 +115,12 @@ class DeviceHandler {
                     }
                     this.lastRecordedTime = now;
                 }
+                this.skPlugin.setStatus(`${this.config.name} is ON`);
             }
             else {
                 // Change status to "off"
                 this.skPlugin.debug(`Device ${this.config.name} is now OFF`);
+                this.skPlugin.setStatus(`${this.config.name} is OFF`);
                 if (this.log.rec.status == 1) {
                     this.log.rec.status = 0;
                     this.log.update();
@@ -125,6 +128,10 @@ class DeviceHandler {
             }
             this.closeFile();
             this.deviceOn = deviceOn;
+
+            if (statusChanged) {
+                this.reportSK();
+            }
         }
     }
 

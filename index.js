@@ -17,6 +17,9 @@ class HourMeterPlugin extends SignalKPlugin {
     this.optNum('offsetHours', 'Hours already on device', 0);
     this.optInt('secReportInterval', 'Reporting interval (secs)', 30, false, 'Number of seconds between each hour meter/status report');
     this.optObjEnd();
+
+    this.unsub = [];
+    this.handlers = [];
   }
 
 
@@ -38,6 +41,8 @@ class HourMeterPlugin extends SignalKPlugin {
         this.subscribeVal(this.evtHeartbeat, handler.onHeartbeat, handler);
         this.handlers.push(handler);
      }
+
+     this.setStatus('Started');
 
   }
 
@@ -72,7 +77,7 @@ class HourMeterPlugin extends SignalKPlugin {
     router.get("/api/devices", (req, res) => {
         if (this.running) {
           let jReturnVal = [];
-          for (handler of this.handlers) {
+          for (var handler of this.handlers) {
             jReturnVal.push(handler.id);
           }
           this.debug(`Returning JSON value ${JSON.stringify(jReturnVal)}`)
