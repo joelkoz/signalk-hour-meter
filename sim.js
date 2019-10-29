@@ -48,6 +48,10 @@ const MockApp = require('./mocks.js').MockApp;
 
 
     function endGenSim() {
+        console.log('Runtime history: ');
+        var history = plugin.getHandler('generator').getHistory();
+        console.log(JSON.stringify(history, null, 2));
+        
         console.log('Stopping...');
         plugin.stop();
         console.log('Stopped');

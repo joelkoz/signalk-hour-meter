@@ -30,7 +30,7 @@ class HourMeterPlugin extends SignalKPlugin {
      this.evtHeartbeat = Bacon.fromPoll(heartbeatInterval, () => { return this.getTime() });
 
      this.handlers = [];
-     
+
      for (var device of this.options.devices) {
         if (device.name && device.skMonitorPath)
         this.debug(`Configuring device ${device.name}`);
@@ -44,12 +44,21 @@ class HourMeterPlugin extends SignalKPlugin {
 
 
   onPluginStopped() {
-
      for (var handler of this.handlers) {
         handler.stop();
      }
   }
 
+
+  getHandler(id) {
+     var retVal = null;
+     for (var handler of this.handlers) {
+        if (handler.id === id) {
+          retVal = handler;
+        }
+     }
+     return retVal;
+  }
 
 
   /**
@@ -73,6 +82,24 @@ class HourMeterPlugin extends SignalKPlugin {
           res.status(503).send('Plugin not running');
         }
     });
+
+    router.get("/api/history/:deviceId", (req, res) => {
+      if (this.running) {
+          var handler = this.getHandler(req.params.deviceId);
+          if (handler != null) {
+              let jReturnVal = handler.getHistory(req.params.start, req.params.end);
+              this.debug(`Returning JSON value ${JSON.stringify(jReturnVal)}`)
+              res.json(jReturnVal);
+          }
+          else {
+            res.status(404).send(`Unknown device [${req.params.deviceId}]`);          
+          }
+        }
+        else {
+          res.status(503).send('Plugin not running');
+        }
+    });
+
   }
 
 

@@ -151,6 +151,46 @@ class DeviceHandler {
         
         this.lastSKReport = this.skPlugin.getTime();
     }
+
+
+
+    parseDate(dt, defaultVal) {
+
+        if (typeof dt === 'string') {
+            let val = Date.parse(dt);
+            if (!isNaN(val)) {
+                return val;
+            }
+            else {
+                this.skPlugin.debug(`Ignoring invalid date format: ${dt}`);                    
+            }
+        }
+        else if (typeof dt === 'number') {
+            return dt;
+        }
+        return defaultVal;
+    }
+
+
+
+    getHistory(start, end) {
+
+        let startRange = this.parseDate(start, 0);
+        let endRange = this.parseDate(end, new Date().getTime());
+
+        var res = { totalRunTime: 0, history: [] };
+        this.openFile();
+        this.log.forEach((rec, recNum) => {
+            if (rec.startTime >= startRange && rec.startTime <= endRange) {
+                let secs = this.elapsedSecs(rec.startTime, rec.endTime);
+                res.history.push({ start: new Date(rec.startTime).toISOString(), end: new Date(rec.endTime).toISOString(), runTime: secs });
+                res.totalRunTime += secs;
+            }
+        });
+        this.closeFile();
+        return res;
+    }
+
 }
 
 module.exports = DeviceHandler;
