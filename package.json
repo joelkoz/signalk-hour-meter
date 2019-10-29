@@ -9,6 +9,10 @@
     "lodash": "^4.17.4",
     "structured-binary-file": "^1.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joelkoz/signalk-hour-meter"
+  },  
   "keywords": [
     "signalk-node-server-plugin",
     "signalk",
