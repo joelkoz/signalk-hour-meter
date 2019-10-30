@@ -185,16 +185,17 @@ class DeviceHandler {
         let startRange = this.parseDate(start, 0);
         let endRange = this.parseDate(end, new Date().getTime());
 
-        var res = { totalRunTime: 0, history: [] };
+        var res = { historyRunTime: 0, history: [] };
         this.openFile();
         this.log.forEach((rec, recNum) => {
             if (rec.startTime >= startRange && rec.startTime <= endRange) {
                 let secs = this.elapsedSecs(rec.startTime, rec.endTime);
                 res.history.push({ start: new Date(rec.startTime).toISOString(), end: new Date(rec.endTime).toISOString(), runTime: secs });
-                res.totalRunTime += secs;
+                res.historyRunTime += secs;
             }
         });
         this.closeFile();
+        res.totalRunTime = this.getTotalTime();
         return res;
     }
 
