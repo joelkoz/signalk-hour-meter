@@ -6,4 +6,4 @@ npm-debug.log
 .history
 .tmp-globalize-webpack
 public/mainPage.js
-
+public/mainPage.js.LICENSE
