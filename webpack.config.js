@@ -1,6 +1,9 @@
 const path = require('path');
 const GlobalizePlugin = require( "globalize-webpack-plugin" );
-var production = process.env.NODE_ENV === "production";
+const TerserPlugin = require('terser-webpack-plugin');
+
+var production = (process.env.NODE_ENV === "production");
+
 module.exports = {
     entry: {
         mainPage: './src/mainPage.jsx'
@@ -49,5 +52,15 @@ module.exports = {
 			messages: "messages/[locale].json",
 			output: "i18n/[locale].[chunkhash].js"
 		})
-	]
+    ],
+    optimization: {
+        minimize: production,
+        minimizer: [
+          new TerserPlugin({
+            cache: true,
+            parallel: true,
+            sourceMap: true
+          }),
+        ],
+      }
   };
