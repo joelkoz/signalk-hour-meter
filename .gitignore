@@ -4,3 +4,6 @@ npm-debug.log
 .env
 .DS_Store
 .history
+.tmp-globalize-webpack
+public/mainPage.js
+
