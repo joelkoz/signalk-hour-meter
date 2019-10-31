@@ -182,6 +182,7 @@ class DeviceHandler {
 
     getHistory(start, end) {
 
+        console.log(`${this.config.name} history request for ${start} thru ${end}`);
         let startRange = this.parseDate(start, 0);
         let endRange = this.parseDate(end, new Date().getTime());
 
