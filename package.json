@@ -5,8 +5,17 @@
   "main": "index.js",
   "dependencies": {
     "baconjs": "^1.0.1",
-    "signalk-plugin-base": "^1.1.1",
+    "cldr-data": "^36.0.0",
+    "globalize": "^1.4.2",
+    "iana-tz-data": "^2019.1.0",
     "lodash": "^4.17.4",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-flags-select": "^1.1.10",
+    "react-table": "^6.10.3",
+    "react-widgets": "^4.4.11",
+    "react-widgets-globalize": "^5.0.20",
+    "signalk-plugin-base": "^1.1.1",
     "structured-binary-file": "^1.0.0"
   },
   "repository": {
@@ -19,7 +28,22 @@
     "signalk-webapp"
   ],
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
     "babel-cli": "^6.26.0",
-    "babel-preset-react-app": "^3.1.2"
+    "babel-loader": "^8.0.6",
+    "babel-preset-react-app": "^3.1.2",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "globalize-webpack-plugin": "^3.0.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development"
   }
 }

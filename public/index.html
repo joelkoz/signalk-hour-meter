@@ -7,19 +7,54 @@
             }
 
             h1 {
+                display: inline;
             }
 
+            .formLabel {
+                display: inline-block;
+                font-weight: bold;
+            }
+
+            .device .inlineRight,
+            .dateRange .inlineRight.datePicker,
+            .inlineRight {
+                display: inline-block; 
+                margin-left: 10px
+            }
+
+            .devicePicker,
+            .datePicker {
+                width: 300px;
+            }
+
+            .section {
+                margin-top: 20px;
+            }
+
+            .colRunTime {
+                text-align: center;
+            }
+
+            .colTotal strong {
+                display:inline-block;
+            }
+
+            .grid {
+                width: 50em
+            }
             .info {
                 margin-bottom: 10px;
+            }
+
+            .getButton {
+                font-size: inherit;
             }
 
         </style>
     </head>
     <body>
         <div id="mainBody"></div>
-
-   <script src="react.production.min.js"></script>
-   <script src="react-dom.production.min.js"></script>      
+    
    <script src="mainPage.js"></script>
     </body>
 </html>
