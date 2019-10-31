@@ -92,7 +92,7 @@ class HourMeterPlugin extends SignalKPlugin {
       if (this.running) {
           var handler = this.getHandler(req.params.deviceId);
           if (handler != null) {
-              let jReturnVal = handler.getHistory(req.params.start, req.params.end);
+              let jReturnVal = handler.getHistory(req.query.start, req.query.end);
               this.debug(`Returning JSON value ${JSON.stringify(jReturnVal)}`)
               res.json(jReturnVal);
           }
