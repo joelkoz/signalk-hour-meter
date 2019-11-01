@@ -1,6 +1,6 @@
 {
   "name": "signalk-hour-meter",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Synthesizes hour meter data when other SignalK values indicate a device is on",
   "main": "index.js",
   "dependencies": {
@@ -44,5 +44,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
     "dev": "NODE_ENV=development webpack --config webpack.dev.js"
-  }
+  },
+  "author": "Joel Kozikowski",
+  "license": "ISC"
 }
