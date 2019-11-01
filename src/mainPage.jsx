@@ -14,9 +14,6 @@ import 'react-widgets/dist/css/react-widgets.css';
 // Localization support...
 import Globalize from 'globalize';
 import globalizeLocalizer from 'react-widgets-globalize';
-import ReactFlagsSelect from 'react-flags-select';
-import 'react-flags-select/css/react-flags-select.css';
-require('./i18n.js');
 
 class MainPage extends React.Component {
 
@@ -98,8 +95,6 @@ class MainPage extends React.Component {
         globalizeLocalizer();
         this.formatNumber = Globalize.numberFormatter({ maximumFractionDigits: 2 });
         this.formatDate = Globalize.dateFormatter({ datetime: "short" });
-
-        console.log(Globalize.formatMessage('hourMeter'));
       }
 
       getHours(secs) {
@@ -152,19 +147,6 @@ class MainPage extends React.Component {
             <div>
 
               <h1>Hour meter</h1>
-              <div className="localization inlineRight" >
-                 <ReactFlagsSelect
-                     countries={["US", "GB", "FR", "DE", "ES", "FI"]}
-                     customLabels={{  "US": "en-US",
-                                      "GB": "en-GB",
-                                      "FR": "fr",
-                                      "DE": "de",
-                                      "ES": "es",
-                                      "FI": "fi" }}
-                     onSelect={ value => this.onFlagChange(value) }
-                     defaultCountry={this.state.country}/>
-              </div>
-
               <div className="device section">
                 <div className="formLabel">Device</div>
                 <DropdownList 

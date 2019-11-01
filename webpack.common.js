@@ -46,11 +46,8 @@ module.exports = {
     },
     plugins: [
 		new GlobalizePlugin({
-			production: false && (process.env.NODE_ENV === "production"),
-			developmentLocale: "en",
-			supportedLocales: [ "de", "en", "es", "fr", "fi" ],
-			messages: "messages/[locale].json",
-      output: "public/i18n_[locale]_[chunkhash].js",
+			production: false,
+			developmentLocale: "en"
 		})
     ],
     optimization: {
@@ -61,9 +58,5 @@ module.exports = {
             sourceMap: true
           }),
         ],
-      },
-    resolve: {
-        extensions: ['.js', '.jsx'],
-        modules: [path.resolve(__dirname, 'src'), 'node_modules', 'node_modules/globalize/dist'],
-    }
+      }
   };
