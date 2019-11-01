@@ -1,9 +1,9 @@
 # SignalK-Hour-Meter
 SignalK Hour Meter is a plugin and corresponding Webapp for the [SignalK Node Server](https://github.com/SignalK/signalk-server-node) that monitors
-the run time of devices on your boat by watching for related SignalK data that indicate the device is currently on.  For example, one of the
+the run time of devices on your boat by watching for related SignalK data that indicates the device is currently on.  For example, one of the
 most common uses is an engine hour meter: this plugin can track and generate `propulsion.0.runTime` values based on the presense of
 non-zero values for `propulsion.0.revolutions`.  The plugin then allows you to retrieve run histories of the device using its WebApp user
-interfaces. You can also programatically retrieve run history using a Json API.
+interface. You can also programatically retrieve run history using a Json API.
 
 
 ## How it works
@@ -26,13 +26,13 @@ It is also available to be selected from the *Webapps* menu option of the Node S
 You can also retrieve data using one of the two following API calls:
 
 ```
-http://my-server.local/plugins/api/devices
+http://my-server.local/plugins/signalk-hour-meter/api/devices
 ```
 
 will return a json array of the device Ids that are defined.
 
 ```
-http://my-server.local/plugins/api/history/<deviceId>
+http://my-server.local/plugins/signalk-hour-meter/api/history/<deviceId>
 ```
 
 where `<deviceId>` is one of the ids returned by the `/plugins/api/devices` call.  The `/plugins/api/history/<deviceId>` allows for
@@ -41,5 +41,5 @@ two optional `start` and `end` query parameters that lets you retrieve a small s
 
 Example:
 ```
-http://my-server.local/plugins/api/history/portEngine?start=2019-10-01&end=2019-11-01
+http://my-server.local/plugins/signalk-hour-meter/api/history/portEngine?start=2019-10-01&end=2019-11-01
 ```
