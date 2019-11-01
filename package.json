@@ -45,7 +45,6 @@
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
-    "dev": "NODE_ENV=development webpack --config webpack.dev.js",
-    "gcfr": "globalize-compiler -l fr -m messages/fr.json -o src/i18n-fr.js i18n.js"
+    "dev": "NODE_ENV=development webpack --config webpack.dev.js"
   }
 }
