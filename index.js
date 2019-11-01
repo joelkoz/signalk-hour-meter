@@ -35,11 +35,12 @@ class HourMeterPlugin extends SignalKPlugin {
      this.handlers = [];
 
      for (var device of this.options.devices) {
-        if (device.name && device.skMonitorPath)
-        this.debug(`Configuring device ${device.name}`);
-        let handler = new DeviceHandler(this, device);
-        this.subscribeVal(this.evtHeartbeat, handler.onHeartbeat, handler);
-        this.handlers.push(handler);
+        if (device.name && device.skMonitorPath) {
+          this.debug(`Configuring device ${device.name}`);
+          let handler = new DeviceHandler(this, device);
+          this.subscribeVal(this.evtHeartbeat, handler.onHeartbeat, handler);
+          this.handlers.push(handler);
+        }
      }
 
      this.setStatus('Started');
