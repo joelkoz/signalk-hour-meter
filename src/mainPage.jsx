@@ -15,6 +15,8 @@ import 'react-widgets/dist/css/react-widgets.css';
 import Globalize from 'globalize';
 import globalizeLocalizer from 'react-widgets-globalize';
 
+const devMode = false;
+
 class MainPage extends React.Component {
 
       constructor(props) {
@@ -37,6 +39,10 @@ class MainPage extends React.Component {
 
         this.setLocale(this.state.locale);
 
+        if (devMode) {
+            this.state.isLoaded = true;
+            this.state.devices = ['device1', 'device2', 'device3'];          
+        }
 
       }
     
@@ -45,26 +51,28 @@ class MainPage extends React.Component {
 
 
       componentDidMount() {
-        fetch("/plugins/signalk-hour-meter/api/devices")
-          .then((res) => {
-             return res.json()
-          })
-          .then(
-            (data) => {
-              this.setState({
-                isLoaded: true,
-                error: null,
-                devices: data,
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error,
-                devices: null
-              });
-            }
-          )      
+        if (!devMode) {
+          fetch("/plugins/signalk-hour-meter/api/devices")
+            .then((res) => {
+              return res.json()
+            })
+            .then(
+              (data) => {
+                this.setState({
+                  isLoaded: true,
+                  error: null,
+                  devices: data,
+                });
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true,
+                  error,
+                  devices: null
+                });
+              }
+            )
+        }      
       }
     
 
@@ -104,37 +112,60 @@ class MainPage extends React.Component {
 
 
       fetchHistory() {
-        let sStart = this.state.startDate.toISOString();
-        let sEnd = this.state.endDate.toISOString()
-        fetch(`/plugins/signalk-hour-meter/api/history/${this.state.currentDevice}?start=${sStart}&end=${sEnd}`)
-          .then((res) => {
-             return res.json()
-          })
-          .then(
-            (data) => {
-              this.setState({
-                isLoaded: true,
-                error: null,
-                data,
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error,
-                data: null
-              });
-            }
-        );
+        if (!devMode) {
+          let sStart = this.state.startDate.toISOString();
+          let sEnd = this.state.endDate.toISOString()
+          fetch(`/plugins/signalk-hour-meter/api/history/${this.state.currentDevice}?start=${sStart}&end=${sEnd}`)
+            .then((res) => {
+              return res.json()
+            })
+            .then(
+              (data) => {
+                this.setState({
+                  isLoaded: true,
+                  error: null,
+                  data,
+                });
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true,
+                  error,
+                  data: null
+                });
+              }
+          );
 
-        this.setState({
-            data: null
-        });
+          this.setState({
+              data: null
+          });
+        }
+        else {
+          // Mock data...
+          this.setState({
+            data: {
+              totalRunTime: 217,
+              historyRunTime: 217,
+              history: [
+                {
+                start: "2019-10-29T21:09:35.122Z",
+                end: "2019-10-29T21:12:12.529Z",
+                runTime: 157
+                },
+                {
+                start: "2019-10-29T21:15:59.224Z",
+                end: "2019-10-29T21:16:59.211Z",
+                runTime: 60
+                }
+              ]
+            }
+           });          
+        }
       }
 
 
       render() {
-        var { isLoaded, devices, currentDevice, data, error } = this.state;
+        const { isLoaded, devices, currentDevice, data, error } = this.state;
 
         if (!isLoaded) {
           return <div>Waiting for response from server...</div>;
