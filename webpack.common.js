@@ -1,5 +1,4 @@
 const path = require('path');
-const GlobalizePlugin = require( "globalize-webpack-plugin" );
 const TerserPlugin = require('terser-webpack-plugin');
 
 console.log(`Webpack process.env.NODE_ENV is ${process.env.NODE_ENV}`)
@@ -44,12 +43,6 @@ module.exports = {
        }       
       ]
     },
-    plugins: [
-		new GlobalizePlugin({
-			production: false,
-			developmentLocale: "en"
-		})
-    ],
     optimization: {
         minimizer: [
           new TerserPlugin({

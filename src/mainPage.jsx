@@ -12,8 +12,9 @@ import 'react-widgets/dist/css/react-widgets.css';
 
 
 // Localization support...
-import Globalize from 'globalize';
-import globalizeLocalizer from 'react-widgets-globalize';
+import Moment from 'moment'
+import momentLocalizer from 'react-widgets-moment';
+import simpleNumberLocalizer from 'react-widgets-simple-number';
 
 const devMode = false;
 
@@ -34,10 +35,19 @@ class MainPage extends React.Component {
             endDate: now
         };
 
-        this.state.country = "US";
-        this.state.locale = this.getLocale('en');
+        // Localization required by React Widgets
+        Moment.locale('en');
+        momentLocalizer();
+        simpleNumberLocalizer();
 
-        this.setLocale(this.state.locale);
+        this.formatNumber = function(number) {
+            return number.toFixed(2);
+        }
+
+        this.formatDate = function(date) {
+            return Moment(date).format('L LT');
+        }
+
 
         if (devMode) {
             this.state.isLoaded = true;
@@ -80,30 +90,6 @@ class MainPage extends React.Component {
       }
   
 
-      onFlagChange(country) {
-        let locale = this.getLocale(country);
-        this.setLocale(locale);
-        this.setState({country, locale });
-      }      
-
-      getLocale(country) {
-        console.log(`Country is ${country}`);
-         if (country.indexOf('-') >= 0) {
-          return country.substr(0,2);
-         }
-         else {
-           return country.toLowerCase();
-         }
-      }
-
-
-      setLocale(locale) {
-        console.log(`Locale is ${locale}`);
-        Globalize.locale(locale);
-        globalizeLocalizer();
-        this.formatNumber = Globalize.numberFormatter({ maximumFractionDigits: 2 });
-        this.formatDate = Globalize.dateFormatter({ datetime: "short" });
-      }
 
       getHours(secs) {
         return this.formatNumber(secs / 3600);
