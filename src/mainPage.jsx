@@ -12,11 +12,11 @@ import 'react-widgets/dist/css/react-widgets.css';
 
 
 // Localization support...
-import Globalize from 'globalize';
-import globalizeLocalizer from 'react-widgets-globalize';
-import ReactFlagsSelect from 'react-flags-select';
-import 'react-flags-select/css/react-flags-select.css';
-require('./i18n.js');
+import Moment from 'moment'
+import momentLocalizer from 'react-widgets-moment';
+import simpleNumberLocalizer from 'react-widgets-simple-number';
+
+const devMode = false;
 
 class MainPage extends React.Component {
 
@@ -35,11 +35,24 @@ class MainPage extends React.Component {
             endDate: now
         };
 
-        this.state.country = "US";
-        this.state.locale = this.getLocale('en');
+        // Localization required by React Widgets
+        Moment.locale('en');
+        momentLocalizer();
+        simpleNumberLocalizer();
 
-        this.setLocale(this.state.locale);
+        this.formatNumber = function(number) {
+            return number.toFixed(2);
+        }
 
+        this.formatDate = function(date) {
+            return Moment(date).format('L LT');
+        }
+
+
+        if (devMode) {
+            this.state.isLoaded = true;
+            this.state.devices = ['device1', 'device2', 'device3'];          
+        }
 
       }
     
@@ -48,26 +61,28 @@ class MainPage extends React.Component {
 
 
       componentDidMount() {
-        fetch("/plugins/signalk-hour-meter/api/devices")
-          .then((res) => {
-             return res.json()
-          })
-          .then(
-            (data) => {
-              this.setState({
-                isLoaded: true,
-                error: null,
-                devices: data,
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error,
-                devices: null
-              });
-            }
-          )      
+        if (!devMode) {
+          fetch("/plugins/signalk-hour-meter/api/devices")
+            .then((res) => {
+              return res.json()
+            })
+            .then(
+              (data) => {
+                this.setState({
+                  isLoaded: true,
+                  error: null,
+                  devices: data,
+                });
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true,
+                  error,
+                  devices: null
+                });
+              }
+            )
+        }      
       }
     
 
@@ -75,32 +90,6 @@ class MainPage extends React.Component {
       }
   
 
-      onFlagChange(country) {
-        let locale = this.getLocale(country);
-        this.setLocale(locale);
-        this.setState({country, locale });
-      }      
-
-      getLocale(country) {
-        console.log(`Country is ${country}`);
-         if (country.indexOf('-') >= 0) {
-          return country.substr(0,2);
-         }
-         else {
-           return country.toLowerCase();
-         }
-      }
-
-
-      setLocale(locale) {
-        console.log(`Locale is ${locale}`);
-        Globalize.locale(locale);
-        globalizeLocalizer();
-        this.formatNumber = Globalize.numberFormatter({ maximumFractionDigits: 2 });
-        this.formatDate = Globalize.dateFormatter({ datetime: "short" });
-
-        console.log(Globalize.formatMessage('hourMeter'));
-      }
 
       getHours(secs) {
         return this.formatNumber(secs / 3600);
@@ -109,37 +98,60 @@ class MainPage extends React.Component {
 
 
       fetchHistory() {
-        let sStart = this.state.startDate.toISOString();
-        let sEnd = this.state.endDate.toISOString()
-        fetch(`/plugins/signalk-hour-meter/api/history/${this.state.currentDevice}?start=${sStart}&end=${sEnd}`)
-          .then((res) => {
-             return res.json()
-          })
-          .then(
-            (data) => {
-              this.setState({
-                isLoaded: true,
-                error: null,
-                data,
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error,
-                data: null
-              });
-            }
-        );
+        if (!devMode) {
+          let sStart = this.state.startDate.toISOString();
+          let sEnd = this.state.endDate.toISOString()
+          fetch(`/plugins/signalk-hour-meter/api/history/${this.state.currentDevice}?start=${sStart}&end=${sEnd}`)
+            .then((res) => {
+              return res.json()
+            })
+            .then(
+              (data) => {
+                this.setState({
+                  isLoaded: true,
+                  error: null,
+                  data,
+                });
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true,
+                  error,
+                  data: null
+                });
+              }
+          );
 
-        this.setState({
-            data: null
-        });
+          this.setState({
+              data: null
+          });
+        }
+        else {
+          // Mock data...
+          this.setState({
+            data: {
+              totalRunTime: 217,
+              historyRunTime: 217,
+              history: [
+                {
+                start: "2019-10-29T21:09:35.122Z",
+                end: "2019-10-29T21:12:12.529Z",
+                runTime: 157
+                },
+                {
+                start: "2019-10-29T21:15:59.224Z",
+                end: "2019-10-29T21:16:59.211Z",
+                runTime: 60
+                }
+              ]
+            }
+           });          
+        }
       }
 
 
       render() {
-        var { isLoaded, devices, currentDevice, data, error } = this.state;
+        const { isLoaded, devices, currentDevice, data, error } = this.state;
 
         if (!isLoaded) {
           return <div>Waiting for response from server...</div>;
@@ -152,19 +164,6 @@ class MainPage extends React.Component {
             <div>
 
               <h1>Hour meter</h1>
-              <div className="localization inlineRight" >
-                 <ReactFlagsSelect
-                     countries={["US", "GB", "FR", "DE", "ES", "FI"]}
-                     customLabels={{  "US": "en-US",
-                                      "GB": "en-GB",
-                                      "FR": "fr",
-                                      "DE": "de",
-                                      "ES": "es",
-                                      "FI": "fi" }}
-                     onSelect={ value => this.onFlagChange(value) }
-                     defaultCountry={this.state.country}/>
-              </div>
-
               <div className="device section">
                 <div className="formLabel">Device</div>
                 <DropdownList 
