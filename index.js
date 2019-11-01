@@ -107,50 +107,6 @@ class HourMeterPlugin extends SignalKPlugin {
 
   }
 
-
-
- // The plugin schema
-  // schema() { 
-  //   return { type: 'object',
-  //             properties: {
-  //               globalSetting: {
-  //                 type: 'string',
-  //                 title: 'Depth measurement SignalK path',
-  //                 default: 'environment.depth.belowSurface'
-  //               },
-  //               devices: {
-  //                 type: 'array',
-  //                 title: 'Devices to syntheisze hour meters',
-  //                 items: { title: "Device",
-  //                          type: "object",
-  //                          properties: {
-  //                              skMonitorPath: { type: "string",
-  //                                               title: 'SignalK path that indicates device is on',
-  //                                               default: ''
-  //                                             },
-  //                              skOutputPath: { type: "string",
-  //                                             title: 'SignalK path to output hour meter data',
-  //                                             default: ''
-  //                                           },
-  //                              offsetHours: { type: 'number',
-  //                                             title: 'Hours already on device',
-  //                                             default: 0
-  //                                           },
-  //                              secTimeout: { type: 'number',
-  //                                            title: 'SignalK timeout',
-  //                                            description: 'The number of seconds of no SignalK data before device assumed off',
-  //                                            default: 60
-                                 
-  //                              }
-  //                        }
-  //                 }
-  //               },
-  //             }
-  //         };
-  // }
-
-
-
 };
 
 
