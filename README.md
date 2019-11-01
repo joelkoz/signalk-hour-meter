@@ -12,6 +12,38 @@ tracked needs to already produce some type of numeric SignalK data that can be m
 that you specify.  Based on the monitored value, the plugin will emit both a total *runTime* value, as well as an optional *status* value that is
 a simple "ON" or "OFF"
 
+## Configuration
+To configure a new device, select `Server -> Plugin Config -> Hour meter` from the node server menu. To add a new device definition, press the blue **+** button.  You can define more than one device if you would like. Simply repeat this step for each device you want to track.
+
+The `Device name` is both a name you make up for the device, as well as an identifier used for the device in the Json API to retrieve history
+reports via software. You can include spaces and punctuation
+in the device name if you wish (they will be removed to create the device identifier), but once you set the name and start collecting data, do not
+change it.  The device identifier, which is derived from the `Device name` is also used for the file name for the history storage.  Changing the name will cause a new history file to be created, losing all your previous data.
+
+The `SignalK value that indicates device is on` is the SignalK path that is monitored by the plugin to determine if the device is on. This
+value should already be created and reported by some other component of your system
+
+The `SignalK timeout (secs)` is the number of seconds of "data silence" the hour meter plugin should tolerate before assuming the device has
+been turned off.  The smaller this number, the quicker the plugin can determine the device has actually been turned off. However, you don't want
+it so small that the plugin starts reporting sporadic 'on/off/on' situations.  The default value of 30 seconds is usually a good number.
+
+The `SignalK path to output hour meter data` indicates the SignalK path the plugin will use to report total "life to date" run time. Note
+that the existing SignalK specification already has definitions for many paths you may want to use.  They all end in `runTime`, so if
+you do end up making up a new path, ending the name in `runTime` will at least stay consistent.  If you leave this field blank, no run time
+data will be reported on the SignalK stream.  The plugin will still log run history, and can still report the status (below) if that path
+is defined.
+
+The `SignalK path to output device status` is used to report "ON" or "OFF" on the SignalK data stream.  If you do not want this report,
+leave this field blank.
+
+The `Hours already on device` allows you to enter a starting hour count for the device. This is useful if you have an analog hour meter
+on the device you can take a reading off of.  You can periodically adjust this value if the reported hours starts to drift from the
+actual hours.  The hour meter plugin always reports total run time as "monitored run time plus hours already on device", so changing
+this value after run time data has already recorded will in fact change the hours reported.
+
+The `Reporting interval (secs)` indicates how often the run time and/or status will be sent over the SignalK data stream when the
+device is on.
+
 ## Reviewing the Data
 The Hour Meter plugin installs a simple Webapp interface that allows you to review the data it has recorded. You can
 view this data in a web browser using the path `/signalk-hour-meter`.  For example:
