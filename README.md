@@ -25,12 +25,14 @@ It is also available to be selected from the *Webapps* menu option of the Node S
 ## API
 You can also retrieve data using one of the two following API calls:
 
+### Get device list
 ```
 http://my-server.local/plugins/signalk-hour-meter/api/devices
 ```
 
 will return a json array of the device Ids that are defined.
 
+### Get device history
 ```
 http://my-server.local/plugins/signalk-hour-meter/api/history/<deviceId>
 ```
