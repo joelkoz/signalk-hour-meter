@@ -6,16 +6,16 @@ const DeviceHandler = require('./DeviceHandler.js');
 class HourMeterPlugin extends SignalKPlugin {
 
   constructor(app) {
-    super({app, id: 'signalk-hour-meter', name: 'Hour meter', description: 'Synthesizes hour meter data when other SignalK values indicate a device is on'});
+    super(app, 'signalk-hour-meter', 'Hour meter', 'Synthesizes hour meter data when other SignalK values indicate a device is on');
 
-    this.optObj({propName: 'devices', title: 'Devices to synthesize hour meters', isArray: true, itemTitle: 'Device'});
-    this.optStr({propName: 'name', title: 'Device name', required: true });    
-    this.optStr({propName: 'skMonitorPath', title: 'SignalK value that indicates device is on', required: true  });
-    this.optInt({propName: 'secTimeout', title: 'SignalK timeout (secs)', defaultVal: 60, longDescription: 'The number of seconds of no SignalK data before device assumed off', required: true});
-    this.optStr({propName: 'skHoursPath', title: 'SignalK path to output hour meter data', longDescription: 'Leave blank to disable'});
-    this.optStr({propName: 'skStatusPath', title: 'SignalK path to output device status', longDescription: 'Leave blank to disable'});
-    this.optNum({propName: 'offsetHours', title: 'Hours already on device' });
-    this.optInt({propName: 'secReportInterval', title: 'Reporting interval (secs)', defaultVal: 30, longDescription: 'Number of seconds between each hour meter/status report', required: true});
+    this.optObj('devices', 'Devices to synthesize hour meters', true, undefined, 'Device');
+    this.optStr('name', 'Device name', '');    
+    this.optStr('skMonitorPath', 'SignalK value that indicates device is on', '');
+    this.optInt('secTimeout', 'SignalK timeout (secs)', 60, false, 'The number of seconds of no SignalK data before device assumed off');
+    this.optStr('skHoursPath', 'SignalK path to output hour meter data', '', false, 'Leave blank to disable');
+    this.optStr('skStatusPath', 'SignalK path to output device status', '', false, 'Leave blank to disable');
+    this.optNum('offsetHours', 'Hours already on device', 0);
+    this.optInt('secReportInterval', 'Reporting interval (secs)', 30, false, 'Number of seconds between each hour meter/status report');
     this.optObjEnd();
 
     this.unsub = [];
