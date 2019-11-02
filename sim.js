@@ -10,7 +10,7 @@ const MockApp = require('./mocks.js').MockApp;
 
     var app = new MockApp(dataPath)
 
-    var plugin = Plugin(app);
+    var plugin = new Plugin(app);
     
     var options = {
        devices: [
