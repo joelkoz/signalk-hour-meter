@@ -26,7 +26,6 @@ class HourMeterPlugin extends SignalKPlugin {
   // Initialization of data streams and properties are done here...
   onPluginStarted() {
           
-     // This is for API demonstration only (see registerWithRouter())
      this.pluginStarted = this.getTime();
      
      var heartbeatInterval = 2000;
