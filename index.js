@@ -14,7 +14,7 @@ class HourMeterPlugin extends SignalKPlugin {
     this.optInt({propName: 'secTimeout', title: 'SignalK timeout (secs)', defaultVal: 60, longDescription: 'The number of seconds of no SignalK data before device assumed off', required: true});
     this.optStr({propName: 'skHoursPath', title: 'SignalK path to output hour meter data', longDescription: 'Leave blank to disable'});
     this.optStr({propName: 'skStatusPath', title: 'SignalK path to output device status', longDescription: 'Leave blank to disable'});
-    this.optNum({propName: 'offsetHours', title: 'Hours already on device' });
+    this.optNum({propName: 'offsetHours', title: 'Hours already on device', defaultVal: 0 });
     this.optInt({propName: 'secReportInterval', title: 'Reporting interval (secs)', defaultVal: 30, longDescription: 'Number of seconds between each hour meter/status report', required: true});
     this.optObjEnd();
 
