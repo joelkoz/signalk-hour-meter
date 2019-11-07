@@ -1,6 +1,6 @@
 {
   "name": "signalk-hour-meter",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Synthesizes hour meter data when other SignalK values indicate a device is on",
   "main": "index.js",
   "dependencies": {
