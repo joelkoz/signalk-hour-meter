@@ -204,12 +204,24 @@ class MainPage extends React.Component {
                                 {
                                   Header: "Start",
                                   id: "start",
-                                  accessor: h => this.formatDate(new Date(h.start))
+                                  accessor: h => this.formatDate(new Date(h.start)),
+                                  sortMethod: (a, b) => {
+                                    if (a.start === b.start) {
+                                      return 0;
+                                    }
+                                    return (a.start > b.start) ? -1 : 1;
+                                  }
                                 },
                                 {
                                   Header: "End",
                                   id: "end",
-                                  accessor: h => this.formatDate(new Date(h.end))
+                                  accessor: h => this.formatDate(new Date(h.end)),
+                                  sortMethod: (a, b) => {
+                                    if (a.end === b.end) {
+                                      return 0;
+                                    }
+                                    return (a.end > b.end) ? -1 : 1;
+                                  }
                                 },
                                 {
                                   Header: "Run time",
@@ -224,7 +236,16 @@ class MainPage extends React.Component {
                                   )
                                 }
                               ]}
+
+                          defaultSorted={[
+                            {
+                              id: "end",
+                              desc: true
+                            }
+                          ]}
+
                           defaultPageSize={ (history.length > 20 ? 20 : history.length )}
+
                           className="-striped -highlight"
                         />
                      </div>
