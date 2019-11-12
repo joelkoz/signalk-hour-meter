@@ -18,6 +18,7 @@ const MockApp = require('./mocks.js').MockApp;
                 name: 'Generator',
                 skMonitorPath: genTempPath,
                 secTimeout: 5,
+                secResume: 15,
                 skHoursPath: 'electrical.generator.engine.runTime',
                 skStatusPath: 'electrical.generator.engine.status',
                 offsetHours: 2989.9,

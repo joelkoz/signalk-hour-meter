@@ -31,7 +31,7 @@ class DBRunLog extends FixedRecordFile {
 
     appendNewRun() {
         this.rec.status = 1;
-        this.rec.startTime = new Date().getTime();;
+        this.rec.startTime = Date.now();
         this.rec.endTime = this.rec.startTime;
         this.appendRecord(this.rec);
     }

@@ -99,12 +99,21 @@ class DeviceHandler {
             this.log.getLast();
             if (deviceOn) {
                 if (this.log.rec.status != 1) {
-                    // Current record is not live - We need a NEW run record...
-                    this.skPlugin.debug(`Creating new run log for ${this.config.name}`);
-                    this.log.appendNewRun();
+                    // Current record is not live
+                    if (this.elapsedSecs(this.log.rec.endTime) <= this.config.secResume) {
+                        // Resume the last run...
+                        this.skPlugin.debug(`Resuming previous run log for ${this.config.name}`);
+                        this.log.rec.status = 1;
+                        this.log.update();
+                    }
+                    else {
+                        // We need a NEW run record...
+                        this.skPlugin.debug(`Creating new run log for ${this.config.name}`);
+                        this.log.appendNewRun();
+                    }
                     this.lastRecordedTime = this.log.rec.endTime;
                 }
-                let now = this.skPlugin.getTime();
+                let now = Date.now();
                 let newSecs = this.elapsedSecs(this.lastRecordedTime, now);
                 if (newSecs >= 5) {
                     if (this.lastRecordedTime > 0) {
