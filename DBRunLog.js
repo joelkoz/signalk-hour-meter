@@ -7,8 +7,8 @@ class DBRunLog extends FixedRecordFile {
     constructor() {
         super(Parser.start()
                     .int8("status")
-                    .double("startTime")
-                    .double("endTime"));
+                    .doublebe("startTime")
+                    .doublebe("endTime"));
         this.rec = {};
         this.rec.status = 0;
         this.rec.startTime = 0;

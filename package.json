@@ -1,13 +1,13 @@
 {
   "name": "signalk-hour-meter",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Synthesizes hour meter data when other SignalK values indicate a device is on",
   "main": "index.js",
   "dependencies": {
     "baconjs": "^1.0.1",
     "lodash": "^4.17.4",
-    "signalk-plugin-base": "^1.2.2",
-    "structured-binary-file": "^1.0.0"
+    "signalk-plugin-base": "^1.4.0",
+    "structured-binary-file": "^1.0.1"
   },
   "repository": {
     "type": "git",
