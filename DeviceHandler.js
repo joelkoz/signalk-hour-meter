@@ -85,9 +85,18 @@ class DeviceHandler {
     }
 
     onMonitorValue(val) {
-        this.skPlugin.debug(`onMonitorValue(${JSON.stringify(val)})`);
+        const isRunning = this.evalRunningValue(val);
+        this.skPlugin.debug(`onMonitorValue(${JSON.stringify(val)}) = ${isRunning}`);
         this.lastValueReceived = this.skPlugin.getTime();
-        this.updateLog(val > 0);
+        this.updateLog(isRunning);
+    }
+
+    evalRunningValue(val) {
+        if (this.config.skMonitorValue) {
+            // note: use abstract equality to ensure ('11' == 11, etc).
+            return (val == this.config.skMonitorValue);
+        }
+        return val > 0;
     }
 
 
